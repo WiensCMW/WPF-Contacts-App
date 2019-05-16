@@ -13,5 +13,13 @@ namespace WpfContactsApp
     /// </summary>
     public partial class App : Application
     {
+        public static string DatabasePath
+        {
+            get
+            {
+                return System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts.db");
+            }
+        }
+
     }
 }
