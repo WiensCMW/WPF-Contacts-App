@@ -26,7 +26,8 @@ namespace WpfContactsApp
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            // save contact
+            DialogResult = true;
         }
     }
 }

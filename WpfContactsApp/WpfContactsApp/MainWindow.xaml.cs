@@ -24,5 +24,11 @@ namespace WpfContactsApp
         {
             InitializeComponent();
         }
+
+        private void buttonNewContact_Click(object sender, RoutedEventArgs e)
+        {
+            NewContactWindow newContactWindow = new NewContactWindow();
+            newContactWindow.ShowDialog();
+        }
     }
 }

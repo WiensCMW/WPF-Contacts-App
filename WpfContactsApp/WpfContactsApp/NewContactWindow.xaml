@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfContactsApp"
         mc:Ignorable="d"
-        Title="NewContactWindow" Height="450"
+        Title="NewContactWindow"
+        Height="450"
         Width="399">
     <Grid>
         <StackPanel Margin="10">
-            <TextBox x:Name="nameTextBox" 
-                     Margin="0, 0, 0, 5"/>
+            <TextBox x:Name="nameTextBox"
+                     Margin="0, 0, 0, 5" />
             <TextBox x:Name="emailTextBox"
                      Margin="0, 0, 0, 5" />
             <TextBox x:Name="phoneNumberTextBox"
