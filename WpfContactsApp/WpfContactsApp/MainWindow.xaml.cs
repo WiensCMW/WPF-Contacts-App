@@ -27,7 +27,7 @@ namespace WpfContactsApp
 
         private void buttonNewContact_Click(object sender, RoutedEventArgs e)
         {
-            NewContactWindow newContactWindow = new NewContactWindow();
+            NewContactWindow newContactWindow = new NewContactWindow() { Owner = this };
             newContactWindow.ShowDialog();
         }
     }
