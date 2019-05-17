@@ -64,20 +64,20 @@ namespace WpfContactsApp
         {
             if (!string.IsNullOrEmpty(filterValue))
             {
-                //List<Contact> filteredList = _contacts.Where(c => (!string.IsNullOrEmpty(c.Name) && c.Name.ToLower().Contains(filterValue.ToLower()))
-                //                                        || (!string.IsNullOrEmpty(c.Email) && c.Email.ToLower().Contains(filterValue.ToLower()))
-                //                                        || (!string.IsNullOrEmpty(c.Phone) && c.Phone.ToLower().Contains(filterValue.ToLower()))).ToList();
-                //contactsListView.ItemsSource = filteredList;
-                var variable = from c2 in _contacts
-                               where (c2.Name != null && c2.Name.Contains(searchTextBox.Text))
-                                   || (c2.Email != null && c2.Email.Contains(searchTextBox.Text))
-                                   || (c2.Phone != null && c2.Phone.Contains(searchTextBox.Text))
-                               orderby c2.Name
-                               select c2;
-                contactsListView.ItemsSource = variable.ToList();
+                // Search all Contact properties for passed in filterValue
+                List<Contact> filteredList = (from c in _contacts
+                                    where (c.Name != null && c.Name.ToLower().Contains(filterValue.ToLower()))
+                                        || (c.Email != null && c.Email.ToLower().Contains(filterValue.ToLower()))
+                                        || (c.Phone != null && c.Phone.ToLower().Contains(filterValue.ToLower()))
+                                    orderby c.Name
+                                    select c).ToList();
+
+                // Assign filtered results to ListView
+                contactsListView.ItemsSource = filteredList;
             }
             else
             {
+                // No filterValue specified, so assign the entire _contacts list to ListView
                 contactsListView.ItemsSource = _contacts;
             }
         }
