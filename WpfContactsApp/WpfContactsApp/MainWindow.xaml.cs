@@ -35,7 +35,16 @@ namespace WpfContactsApp
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
             {
                 conn.CreateTable<Contact>();
-                _contacts = conn.Table<Contact>().ToList();
+                _contacts = conn.Table<Contact>().ToList().OrderBy(c => c.Name).ToList();
+
+                var variable = from c2 in _contacts
+                               where (c2.Name != null && c2.Name.Contains(searchTextBox.Text))
+                                   || (c2.Email != null && c2.Email.Contains(searchTextBox.Text))
+                                   || (c2.Phone != null && c2.Phone.Contains(searchTextBox.Text))
+                               orderby c2.Name
+                               select c2;
+
+                var res = variable.ToList();
             }
 
              // Assign contacts list to ListView's ItemsSource
@@ -55,10 +64,17 @@ namespace WpfContactsApp
         {
             if (!string.IsNullOrEmpty(filterValue))
             {
-                List<Contact> filteredList = _contacts.Where(c => (!string.IsNullOrEmpty(c.Name) && c.Name.ToLower().Contains(filterValue.ToLower()))
-                                                        || (!string.IsNullOrEmpty(c.Email) && c.Email.ToLower().Contains(filterValue.ToLower()))
-                                                        || (!string.IsNullOrEmpty(c.Phone) && c.Phone.ToLower().Contains(filterValue.ToLower()))).ToList();
-                contactsListView.ItemsSource = filteredList;
+                //List<Contact> filteredList = _contacts.Where(c => (!string.IsNullOrEmpty(c.Name) && c.Name.ToLower().Contains(filterValue.ToLower()))
+                //                                        || (!string.IsNullOrEmpty(c.Email) && c.Email.ToLower().Contains(filterValue.ToLower()))
+                //                                        || (!string.IsNullOrEmpty(c.Phone) && c.Phone.ToLower().Contains(filterValue.ToLower()))).ToList();
+                //contactsListView.ItemsSource = filteredList;
+                var variable = from c2 in _contacts
+                               where (c2.Name != null && c2.Name.Contains(searchTextBox.Text))
+                                   || (c2.Email != null && c2.Email.Contains(searchTextBox.Text))
+                                   || (c2.Phone != null && c2.Phone.Contains(searchTextBox.Text))
+                               orderby c2.Name
+                               select c2;
+                contactsListView.ItemsSource = variable.ToList();
             }
             else
             {
