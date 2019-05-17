@@ -36,15 +36,6 @@ namespace WpfContactsApp
             {
                 conn.CreateTable<Contact>();
                 _contacts = conn.Table<Contact>().ToList().OrderBy(c => c.Name).ToList();
-
-                var variable = from c2 in _contacts
-                               where (c2.Name != null && c2.Name.Contains(searchTextBox.Text))
-                                   || (c2.Email != null && c2.Email.Contains(searchTextBox.Text))
-                                   || (c2.Phone != null && c2.Phone.Contains(searchTextBox.Text))
-                               orderby c2.Name
-                               select c2;
-
-                var res = variable.ToList();
             }
 
              // Assign contacts list to ListView's ItemsSource
