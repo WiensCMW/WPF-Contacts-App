@@ -8,21 +8,29 @@
         Title="MainWindow"
         Height="362"
         Width="719">
-    <StackPanel Margin="10">
-        <!--New Contact Button-->
-        <Button x:Name="buttonNewContact"
-                Content="New Contact"
-                Click="buttonNewContact_Click" />
+    <DockPanel Height="Auto"
+               Width="Auto"
+               Margin="10">
 
-        <!--Search TextBox-->
-        <TextBox x:Name="searchTextBox"
-                 Margin="0,5,0,5"
-                 TextChanged="SearchTextBox_TextChanged" />
+        <StackPanel DockPanel.Dock="Top">
+            <!--New Contact Button-->
+            <Button x:Name="buttonNewContact"
+                    Content="New Contact"
+                    Click="buttonNewContact_Click" />
+
+            <!--Search TextBox-->
+            <TextBox x:Name="searchTextBox"
+                     Margin="0,5,0,0"
+                     TextChanged="SearchTextBox_TextChanged" />
+        </StackPanel>
 
         <!--List View-->
         <ListView x:Name="contactsListView"
                   Margin="0, 5, 0, 0"
-                  Height="280">
+                  Height="Auto"
+                  Width="Auto"
+                  SelectionChanged="ContactsListView_SelectionChanged"
+                  DockPanel.Dock="Top">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -39,5 +47,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackPanel>
+    </DockPanel>
 </Window>

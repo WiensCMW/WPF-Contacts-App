@@ -44,7 +44,7 @@ namespace WpfContactsApp
                 conn.Insert(contact);
             }
 
-            DialogResult = true;
+            Close();
         }
     }
 }

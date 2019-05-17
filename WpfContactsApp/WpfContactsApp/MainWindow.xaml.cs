@@ -72,5 +72,18 @@ namespace WpfContactsApp
                 contactsListView.ItemsSource = _contacts;
             }
         }
+
+        private void ContactsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Contact selectedContact = (Contact)contactsListView.SelectedItem;
+            if (selectedContact != null)
+            {
+                ContactDetailsWindow contactDetails = new ContactDetailsWindow(selectedContact) { Owner = this };
+                contactDetails.ShowDialog();
+            }
+
+            ReadDatabase();
+            FilterListBox(searchTextBox.Text);
+        }
     }
 }
