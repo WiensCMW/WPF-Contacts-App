@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using WpfContactsApp.Classes;
@@ -11,9 +12,12 @@ namespace WpfContactsApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Contact> _contacts;
+
         public MainWindow()
         {
             InitializeComponent();
+            _contacts = new List<Contact>();
 
             ReadDatabase();
         }
@@ -28,15 +32,38 @@ namespace WpfContactsApp
 
         private void ReadDatabase()
         {
-            List<Contact> contacts = new List<Contact>();
             using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
             {
                 conn.CreateTable<Contact>();
-                contacts = conn.Table<Contact>().ToList();
+                _contacts = conn.Table<Contact>().ToList();
             }
 
              // Assign contacts list to ListView's ItemsSource
-            contactsListView.ItemsSource = contacts;
+            contactsListView.ItemsSource = _contacts;
+
+            FilterListBox(searchTextBox.Text);
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox searchTextBox = sender as TextBox;
+
+            FilterListBox(searchTextBox.Text);
+        }
+
+        private void FilterListBox(string filterValue)
+        {
+            if (!string.IsNullOrEmpty(filterValue))
+            {
+                List<Contact> filteredList = _contacts.Where(c => (!string.IsNullOrEmpty(c.Name) && c.Name.ToLower().Contains(filterValue.ToLower()))
+                                                        || (!string.IsNullOrEmpty(c.Email) && c.Email.ToLower().Contains(filterValue.ToLower()))
+                                                        || (!string.IsNullOrEmpty(c.Phone) && c.Phone.ToLower().Contains(filterValue.ToLower()))).ToList();
+                contactsListView.ItemsSource = filteredList;
+            }
+            else
+            {
+                contactsListView.ItemsSource = _contacts;
+            }
         }
     }
 }
